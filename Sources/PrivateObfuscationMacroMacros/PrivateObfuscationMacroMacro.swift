@@ -13,7 +13,7 @@ import SwiftSyntaxMacros
 ///  will expand to
 ///
 ///     (x + y, "x + y")
-public struct Base64ObfuscationMacro: ExpressionMacro {
+public struct ArrayJoinedObfuscationMacro: ExpressionMacro {
     public static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
@@ -25,18 +25,15 @@ public struct Base64ObfuscationMacro: ExpressionMacro {
             fatalError("compiler bug: Expected a string literal")
         }
 
-        // Convert to Base64
-        guard let data = text.data(using: .utf8) else {
-            fatalError("compiler bug: Data conversion failed")
-        }
+        let array = text.map({ "\($0)" })
 
-        return .init(literal: data.base64EncodedString())
+        return "\(raw: array).joined()"
     }
 }
 
 @main
 struct PrivateObfuscationMacroPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
-        Base64ObfuscationMacro.self,
+        ArrayJoinedObfuscationMacro.self,
     ]
 }

@@ -1,8 +1,8 @@
 import PrivateObfuscationMacro
 import Foundation
 
-let result = #base64Encoded("test")
+let result = #arrayEncoded("test")
 
-let base64Decoded = String(data: Data(base64Encoded: result)!, encoding: .utf8)
+//let base64Decoded = String(data: Data(base64Encoded: result)!, encoding: .utf8)
 
-print(base64Decoded)
+print(result)

@@ -1,10 +1,10 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
-/// A macro that produces code that encodes a string to
+/// A macro that produces code that splits a string into an array and joins it back together
 ///
-///     #stringify(x + y)
+///     #stringify("food)
 ///
-/// produces a tuple `(x + y, "x + y")`.
+/// produces an array converted to string: `["f", "o", "o"].joined()`.
 @freestanding(expression)
-public macro base64Encoded(_ value: String) -> String = #externalMacro(module: "PrivateObfuscationMacroMacros", type: "Base64ObfuscationMacro")
+public macro arrayEncoded(_ value: String) -> String = #externalMacro(module: "PrivateObfuscationMacroMacros", type: "ArrayJoinedObfuscationMacro")
