@@ -1,4 +1,5 @@
 import SwiftCompilerPlugin
+import Foundation
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
@@ -12,22 +13,30 @@ import SwiftSyntaxMacros
 ///  will expand to
 ///
 ///     (x + y, "x + y")
-public struct StringifyMacro: ExpressionMacro {
+public struct Base64ObfuscationMacro: ExpressionMacro {
     public static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) -> ExprSyntax {
-        guard let argument = node.arguments.first?.expression else {
-            fatalError("compiler bug: the macro does not have any arguments")
+        // Ensure the argument is a string literal
+        guard let stringLiteral = node.arguments.first?.expression.as(StringLiteralExprSyntax.self),
+              let text = stringLiteral.segments.first?.as(StringSegmentSyntax.self)?.content.text
+        else {
+            fatalError("compiler bug: Expected a string literal")
         }
 
-        return "(\(argument), \(literal: argument.description))"
+        // Convert to Base64
+        guard let data = text.data(using: .utf8) else {
+            fatalError("compiler bug: Data conversion failed")
+        }
+
+        return .init(literal: data.base64EncodedString())
     }
 }
 
 @main
 struct PrivateObfuscationMacroPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
-        StringifyMacro.self,
+        Base64ObfuscationMacro.self,
     ]
 }

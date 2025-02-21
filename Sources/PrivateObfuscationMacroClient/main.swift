@@ -1,8 +1,8 @@
 import PrivateObfuscationMacro
+import Foundation
 
-let a = 17
-let b = 25
+let result = #base64Encoded("test")
 
-let (result, code) = #stringify(a + b)
+let base64Decoded = String(data: Data(base64Encoded: result)!, encoding: .utf8)
 
-print("The value \(result) was produced by the code \"\(code)\"")
+print(base64Decoded)
