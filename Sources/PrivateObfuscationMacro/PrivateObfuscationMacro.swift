@@ -6,7 +6,7 @@ import Foundation
 ///
 ///     #arrayEncoded("food")
 ///
-/// produces an array converted to string: `["f", "o", "o"].joined()`.
+/// produces an array converted to string: `["f", "o", "o", "d"].joined()`.
 @freestanding(expression)
 public macro arrayEncoded(_ value: String) -> String = #externalMacro(module: "PrivateObfuscationMacroMacros", type: "ArrayJoinedObfuscationMacro")
 
