@@ -16,7 +16,7 @@ public macro arrayEncoded(_ value: String) -> String = #externalMacro(module: "P
 ///
 /// produces an array converted to string: `PrivateObfuscationMacro.base64Decoded("dGVzdA==")`.
 @freestanding(expression)
-public macro base64Encoded(_ value: String) -> String = #externalMacro(module: "PrivateObfuscationMacroMacros", type: "Base64ObfuscationMacro")
+public macro base64Encoded(_ value: String) -> String? = #externalMacro(module: "PrivateObfuscationMacroMacros", type: "Base64ObfuscationMacro")
 
 
 public func base64Decoded(_ string: String) -> String? {
